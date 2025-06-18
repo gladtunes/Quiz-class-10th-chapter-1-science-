@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 10 - Chapter 1 MCQ Quiz</title>
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #0056b3;
+        }
+
+        /* Screens */
+        #start-screen, #quiz-screen, #result-screen {
+            display: none; /* Initially hide all screens */
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; /* MODIFIED: For aligning icon and text */
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Space between icon and text */
+            width: 100%;
+            padding: 15px;
+            margin: 8px 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-sizing: border-box;
+            text-decoration: none; /* For <a> tags styled as buttons */
+        }
+
+        .btn:hover:not([disabled]) {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* Quiz Specific Styles */
+        #question-container {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        #question-text {
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        #answer-buttons .btn {
+            background-color: #007bff;
+        }
+
+        #answer-buttons .btn.correct {
+            background-color: #28a745;
+        }
+
+        #answer-buttons .btn.incorrect {
+            background-color: #dc3545;
+        }
+        
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        #next-btn {
+            background-color: #ffc107;
+            color: #212529;
+            display: none;
+        }
+        
+        /* --- MODIFIED & NEW STYLES for Result Screen --- */
+        #result-buttons-container {
+            display: flex;
+            gap: 15px;
+            flex-direction: column; /* Stack on small screens */
+        }
+        
+        /* Make buttons side-by-side on larger screens */
+        @media (min-width: 600px) {
+            #result-buttons-container {
+                flex-direction: row;
+            }
+        }
+
+        #play-again-btn {
+            background-color: #007bff;
+        }
+        #play-again-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        /* NEW: WhatsApp Button Style */
+        #whatsapp-share-link {
+            background-color: #25D366; /* Official WhatsApp Green */
+        }
+        #whatsapp-share-link:hover {
+            background-color: #128C7E; /* Darker green on hover */
+        }
+
+        .btn svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Start Screen -->
+        <div id="start-screen">
+            <h1>Class 10 Science Quiz</h1>
+            <h2>Chapter 1: Chemical Reactions and Equations</h2>
+            <p>Choose the number of questions you want to attempt:</p>
+            <div id="start-options">
+                <button class="btn" style="background-color:#28a745;" onclick="startQuiz(5)">5 Questions</button>
+                <button class="btn" style="background-color:#28a745;" onclick="startQuiz(10)">10 Questions</button>
+                <button class="btn" style="background-color:#28a745;" onclick="startQuiz(20)">20 Questions</button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen">
+            <div id="question-container">
+                <div id="question-text">Question text will go here.</div>
+                <div id="answer-buttons"></div>
+            </div>
+            <button id="next-btn" class="btn">Next</button>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen">
+            <h2 id="score-text">Your score will be shown here.</h2>
+            <!-- MODIFIED: Container for Play Again and Share buttons -->
+            <div id="result-buttons-container">
+                <button id="play-again-btn" class="btn" onclick="restartQuiz()">Play Again</button>
+                <!-- NEW: WhatsApp Share Button (as a link) -->
+                <a id="whatsapp-share-link" href="#" target="_blank" class="btn">
+                    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>WhatsApp</title><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+                    Share on WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DOM Elements ---
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const questionTextElement = document.getElementById('question-text');
+        const answerButtonsElement = document.getElementById('answer-buttons');
+        const nextButton = document.getElementById('next-btn');
+        const scoreTextElement = document.getElementById('score-text');
+        const whatsappShareLink = document.getElementById('whatsapp-share-link'); // NEW
+
+        // --- Quiz State ---
+        let shuffledQuestions, currentQuestionIndex, score;
+
+        // --- Event Listener ---
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            setNextQuestion();
+        });
+
+        // --- Question Bank (same 20 questions) ---
+        const allQuestions = [
+            { question: 'What is the chemical formula for quicklime?', answers: [{ text: 'CaO', correct: true },{ text: 'Ca(OH)2', correct: false },{ text: 'CaCO3', correct: false },{ text: 'CaCl2', correct: false }]},
+            { question: 'The reaction Mg + O2 -> MgO is an example of a:', answers: [{ text: 'Decomposition reaction', correct: false },{ text: 'Combination reaction', correct: true },{ text: 'Displacement reaction', correct: false },{ text: 'Double displacement reaction', correct: false }]},
+            { question: 'What happens when dilute hydrochloric acid is added to iron filings?', answers: [{ text: 'Hydrogen gas and iron chloride are produced', correct: true },{ text: 'Chlorine gas and iron hydroxide are produced', correct: false },{ text: 'No reaction takes place', correct: false },{ text: 'Iron salt and water are produced', correct: false }]},
+            { question: 'What is the process of coating iron with a layer of zinc called?', answers: [{ text: 'Corrosion', correct: false },{ text: 'Rusting', correct: false },{ text: 'Galvanization', correct: true },{ text: 'Electroplating', correct: false }]},
+            { question: 'Heating of limestone (CaCO3) produces quicklime and carbon dioxide. This is a:', answers: [{ text: 'Combination reaction', correct: false },{ text: 'Thermal decomposition reaction', correct: true },{ text: 'Displacement reaction', correct: false },{ text: 'Redox reaction', correct: false }]},
+            { question: 'Which of the following is a balanced chemical equation?', answers: [{ text: 'H2 + O2 -> H2O', correct: false },{ text: 'Fe + H2O -> Fe3O4 + H2', correct: false },{ text: '2Mg + O2 -> 2MgO', correct: true },{ text: 'N2 + H2 -> NH3', correct: false }]},
+            { question: 'The reaction in which a substance gains oxygen or loses hydrogen is called:', answers: [{ text: 'Reduction', correct: false },{ text: 'Oxidation', correct: true },{ text: 'Corrosion', correct: false },{ text: 'Rancidity', correct: false }]},
+            { question: 'When lead nitrate is heated, the color of the nitrogen dioxide gas evolved is:', answers: [{ text: 'Colorless', correct: false },{ text: 'Blue', correct: false },{ text: 'Brown', correct: true },{ text: 'Green', correct: false }]},
+            { question: 'What type of reaction is the digestion of food in our body?', answers: [{ text: 'Decomposition reaction', correct: true },{ text: 'Combination reaction', correct: false },{ text: 'Displacement reaction', correct: false },{ text: 'Double displacement reaction', correct: false }]},
+            { question: 'Rancidity is the oxidation of:', answers: [{ text: 'Metals', correct: false },{ text: 'Fats and Oils', correct: true },{ text: 'Acids', correct: false },{ text: 'Bases', correct: false }]},
+            { question: 'Which of the following is an exothermic process?', answers: [{ text: 'Evaporation of water', correct: false },{ text: 'Melting of ice', correct: false },{ text: 'Dilution of an acid', correct: true },{ text: 'Sublimation of camphor', correct: false }]},
+            { question: 'In the reaction 2PbO(s) + C(s) -> 2Pb(s) + CO2(g), which substance is oxidized?', answers: [{ text: 'Lead (Pb)', correct: false },{ text: 'Lead Oxide (PbO)', correct: false },{ text: 'Carbon (C)', correct: true },{ text: 'Carbon Dioxide (CO2)', correct: false }]},
+            { question: 'A solution of a substance ‘X’ is used for whitewashing. The substance ‘X’ is:', answers: [{ text: 'Calcium oxide (CaO)', correct: true },{ text: 'Calcium hydroxide (Ca(OH)2)', correct: false },{ text: 'Calcium carbonate (CaCO3)', correct: false },{ text: 'Calcium sulfate (CaSO4)', correct: false }]},
+            { question: 'When an iron nail is dipped in a copper sulphate solution, the solution turns green. This is a:', answers: [{ text: 'Combination reaction', correct: false },{ text: 'Decomposition reaction', correct: false },{ text: 'Displacement reaction', correct: true },{ text: 'Double displacement reaction', correct: false }]},
+            { question: 'Which gas is used to prevent the rancidity of chips in packets?', answers: [{ text: 'Oxygen', correct: false },{ text: 'Hydrogen', correct: false },{ text: 'Nitrogen', correct: true },{ text: 'Carbon dioxide', correct: false }]},
+            { question: 'The reaction between sodium sulphate and barium chloride solutions is an example of:', answers: [{ text: 'Displacement reaction', correct: false }, { text: 'Double displacement & Precipitation reaction', correct: true }, { text: 'Combination reaction', correct: false }, { text: 'Decomposition reaction', correct: false }]},
+            { question: 'The reaction between an acid and a base to form salt and water is called a:', answers: [{ text: 'Neutralization reaction', correct: true },{ text: 'Oxidation reaction', correct: false },{ text: 'Reduction reaction', correct: false },{ text: 'Hydrolysis reaction', correct: false }]},
+            { question: 'The mole ratio of H2 and O2 gases liberated during electrolysis of water is:', answers: [{ text: '1:1', correct: false },{ text: '2:1', correct: true },{ text: '4:1', correct: false },{ text: '1:2', correct: false }]},
+            { question: 'What does the symbol (aq) in a chemical equation represent?', answers: [{ text: 'Aqueous solution (dissolved in water)', correct: true },{ text: 'Liquid state', correct: false },{ text: 'Gaseous state', correct: false },{ text: 'Solid precipitate', correct: false }]},
+            { question: 'The formation of rust on iron is an example of:', answers: [{ text: 'Rapid combustion', correct: false },{ text: 'Slow oxidation (Corrosion)', correct: true },{ text: 'Reduction', correct: false },{ text: 'A physical change', correct: false }]}
+        ];
+
+        // --- Functions ---
+        function startQuiz(numQuestions) {
+            score = 0;
+            currentQuestionIndex = 0;
+            shuffledQuestions = allQuestions.sort(() => Math.random() - 0.5).slice(0, numQuestions);
+            startScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+            resultScreen.style.display = 'none';
+            setNextQuestion();
+        }
+
+        function setNextQuestion() {
+            resetState();
+            if (currentQuestionIndex < shuffledQuestions.length) {
+                showQuestion(shuffledQuestions[currentQuestionIndex]);
+            } else {
+                showResult();
+            }
+        }
+
+        function showQuestion(question) {
+            questionTextElement.innerText = `${currentQuestionIndex + 1}. ${question.question}`;
+            question.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.innerText = answer.text;
+                button.classList.add('btn');
+                if (answer.correct) {
+                    button.dataset.correct = answer.correct;
+                }
+                button.addEventListener('click', selectAnswer);
+                answerButtonsElement.appendChild(button);
+            });
+        }
+
+        function resetState() {
+            nextButton.style.display = 'none';
+            while (answerButtonsElement.firstChild) {
+                answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+            }
+        }
+
+        function selectAnswer(e) {
+            const selectedButton = e.target;
+            const correct = selectedButton.dataset.correct === "true";
+            if (correct) {
+                score++;
+            }
+            Array.from(answerButtonsElement.children).forEach(button => {
+                setStatusClass(button, button.dataset.correct === "true");
+                button.disabled = true;
+            });
+            if (shuffledQuestions.length > currentQuestionIndex + 1) {
+                nextButton.style.display = 'inline-flex';
+            } else {
+                nextButton.innerText = 'Show Results';
+                nextButton.style.display = 'inline-flex';
+            }
+        }
+        
+        function setStatusClass(element, correct) {
+            if (correct) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+            }
+        }
+
+        function showResult() {
+            quizScreen.style.display = 'none';
+            resultScreen.style.display = 'block';
+            scoreTextElement.innerText = `You scored ${score} out of ${shuffledQuestions.length}!`;
+            
+            // --- NEW: Update WhatsApp Share Link ---
+            const message = `*My Quiz Result!* 🏆\n\nI scored *${score} out of ${shuffledQuestions.length}* on the Class 10 Science (Ch. 1) quiz.\n\nThink you can do better? Try it yourself!`;
+            // The link needs to be encoded to work in a URL
+            const encodedMessage = encodeURIComponent(message);
+            whatsappShareLink.href = `https://wa.me/?text=${encodedMessage}`;
+            // --- End of New Part ---
+
+            nextButton.innerText = 'Next'; // Reset button for next quiz
+        }
+
+        function restartQuiz() {
+            startScreen.style.display = 'block';
+            resultScreen.style.display = 'none';
+        }
+
+        // --- Initial Load ---
+        startScreen.style.display = 'block';
+    </script>
+
+</body>
+</html>
